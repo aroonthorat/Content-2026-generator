@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synapse - An AI Toolroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: 'var(--color-background)',
+              surface: 'var(--color-surface)',
+              primary: 'var(--color-primary)',
+              'primary-hover': 'var(--color-primary-hover)',
+              secondary: 'var(--color-secondary)',
+              accent: 'var(--color-accent)',
+              border: 'var(--color-border)',
+              textMain: 'var(--color-text-main)',
+              textSub: 'var(--color-text-sub)',
+              textMuted: 'var(--color-text-muted)',
+            },
+            animation: {
+              'pop-in': 'pop-in 0.5s ease-out forwards',
+              'slide-fade-in': 'slide-fade-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both',
+              'text-glow': 'animated-text-glow 6s ease-in-out infinite',
+              'pulse-glow': 'animated-glow 6s ease-in-out infinite',
+              'gradient-x': 'gradient-x 3s ease infinite',
+            },
+            keyframes: {
+              'pop-in': {
+                '0%': { transform: 'scale(0.5)', opacity: '0' },
+                '50%': { transform: 'scale(1.2)', opacity: '1' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              'slide-fade-in': {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'animated-text-glow': {
+                '0%, 100%': { textShadow: '0 0 5px rgba(255,255,255,0.8), 0 0 10px var(--color-accent)' },
+                '50%': { textShadow: '0 0 5px rgba(255,255,255,0.8), 0 0 10px var(--color-primary)' },
+              },
+              'animated-glow': {
+                '0%, 100%': { boxShadow: '0 0 20px var(--color-accent), 0 0 30px var(--color-accent), inset 0 0 10px var(--color-accent)' },
+                '50%': { boxShadow: '0 0 20px var(--color-primary), 0 0 30px var(--color-primary), inset 0 0 10px var(--color-primary)' },
+              },
+              'gradient-x': {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        transition: background-color 0.5s ease;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 10px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@capacitor/cli": "https://esm.sh/@capacitor/cli@^8.0.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

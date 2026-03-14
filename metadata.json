@@ -1,0 +1,9 @@
+{
+  "name": "Synapse",
+  "description": "An AI Toolroom featuring MCQ scanning, Neural Text-to-Speech, Animation generation, and Campaign poster design.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "display-capture"
+  ]
+}
