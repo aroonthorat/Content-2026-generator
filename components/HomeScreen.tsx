@@ -9,6 +9,7 @@ import ImageGenIcon from './icons/ImageGenIcon';
 import WandIcon from './icons/WandIcon';
 import LockIcon from './icons/LockIcon';
 import MathIcon from './icons/MathIcon';
+import ClapboardIcon from './icons/ClapboardIcon';
 import { User } from '../types';
 
 interface HomeScreenProps {
@@ -19,6 +20,7 @@ interface HomeScreenProps {
   onSelectPosterMaker: () => void;
   onSelectBulkEditor: () => void;
   onSelectMathReplicator: () => void;
+  onSelectAIVideoGenerator: () => void;
   onSelectAdmin: () => void;
   onOpenSettings: () => void;
   user: User;
@@ -33,6 +35,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   onSelectPosterMaker,
   onSelectBulkEditor,
   onSelectMathReplicator,
+  onSelectAIVideoGenerator,
   onSelectAdmin, 
   onOpenSettings, 
   user, 
@@ -41,8 +44,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   // STRICT: Only this email can access admin features.
   const isAdmin = user.email.toLowerCase() === 'aroonthorat@dev.com';
   
-  const permissions = user.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true };
-  const { mcq, reader, video, proVideo, poster, bulkEditor, mathReplicator } = permissions;
+  const permissions = user.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true, aiVideoGenerator: true };
+  const { mcq, reader, video, proVideo, poster, bulkEditor, mathReplicator, aiVideoGenerator } = permissions;
 
   const renderToolCard = (
     title: string,
@@ -131,6 +134,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             onSelectMathReplicator,
             mathReplicator,
             { border: 'hover:border-blue-500', shadow: 'hover:shadow-blue-500/20', iconText: 'text-blue-500 group-hover:text-white' }
+        )}
+
+        {/* Option 5.5: AI Video Generator */}
+        {renderToolCard(
+            "AI Storyteller",
+            "Generate scripts & animated scenes.",
+            <ClapboardIcon className="w-full h-full" />,
+            onSelectAIVideoGenerator,
+            aiVideoGenerator ?? true,
+            { border: 'hover:border-primary', shadow: 'hover:shadow-primary/20', iconText: 'text-primary group-hover:text-white' }
         )}
 
         {/* Option 6: Animation Sketch */}

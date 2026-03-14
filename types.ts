@@ -32,6 +32,7 @@ export interface UserPermissions {
   poster: boolean;
   bulkEditor: boolean; // Image Editor
   mathReplicator: boolean; // Docu-Replica
+  aiVideoGenerator: boolean; // AI Animated Video
 }
 
 export interface User {

@@ -26,6 +26,7 @@ const PosterMaker = React.lazy(() => import('./components/PosterMaker'));
 const ProVideoMaker = React.lazy(() => import('./components/ProVideoMaker'));
 const BulkImageEditor = React.lazy(() => import('./components/BulkImageEditor'));
 const MathLayoutReplicator = React.lazy(() => import('./components/MathLayoutReplicator'));
+const AIVideoGenerator = React.lazy(() => import('./components/AIVideoGenerator'));
 
 const THEMES: Record<string, AppTheme> = {
   PRISM: { id: 'PRISM', name: 'Geometric Prism', category: 'Basic', colors: { '--color-background': '#1f2937', '--color-surface': 'rgba(255, 255, 255, 0.15)', '--color-primary': '#2dd4bf', '--color-primary-hover': '#14b8a6', '--color-secondary': '#fb923c', '--color-accent': '#94a3b8', '--color-border': 'rgba(45, 212, 191, 0.3)', '--color-text-main': '#f1f5f9', '--color-text-sub': '#cbd5e1', '--color-text-muted': 'rgba(203, 213, 225, 0.5)' } },
@@ -63,7 +64,7 @@ const App: React.FC = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [mcqReaderTitle, setMcqReaderTitle] = useState<string>('MCQ Reader');
   const [settingsLoaded, setSettingsLoaded] = useState(false);
-  const [currentView, setCurrentView] = useState<'HOME' | 'MCQ_READER' | 'READER' | 'ADMIN_DASHBOARD' | 'VIDEO_MAKER' | 'POSTER_MAKER' | 'PRO_VIDEO_MAKER' | 'BULK_EDITOR' | 'MATH_REPLICATOR'>('HOME');
+  const [currentView, setCurrentView] = useState<'HOME' | 'MCQ_READER' | 'READER' | 'ADMIN_DASHBOARD' | 'VIDEO_MAKER' | 'POSTER_MAKER' | 'PRO_VIDEO_MAKER' | 'BULK_EDITOR' | 'MATH_REPLICATOR' | 'AI_VIDEO_GENERATOR'>('HOME');
   const [questionQueue, setQuestionQueue] = useState<QuestionData[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
   const [appState, setAppState] = useState<AppState>(AppState.IDLE);
@@ -221,7 +222,7 @@ const App: React.FC = () => {
         email: 'guest@synapse.ai',
         name: 'Guest',
         role: 'USER',
-        permissions: { mcq: true, reader: true, video: true, proVideo: true, poster: true, bulkEditor: true, mathReplicator: true }
+        permissions: { mcq: true, reader: true, video: true, proVideo: true, poster: true, bulkEditor: true, mathReplicator: true, aiVideoGenerator: true }
     };
     setUser(guestUser);
     if (files && files.length > 0) {
@@ -315,6 +316,7 @@ const App: React.FC = () => {
         case 'BULK_EDITOR': return { title: 'Photo Lab', subtitle: 'Intelligent Restoration', logoSize: 'w-24 h-24', titleSize: 'text-3xl', subtitleSize: 'text-base', headerMargin: 'mb-4' };
         case 'POSTER_MAKER': return { title: 'Campaign Planner', subtitle: 'Political Strategy', logoSize: 'w-24 h-24', titleSize: 'text-3xl', subtitleSize: 'text-base', headerMargin: 'mb-4' };
         case 'MATH_REPLICATOR': return { title: 'Docu-Replica', subtitle: 'Math Reconstruction', logoSize: 'w-24 h-24', titleSize: 'text-3xl', subtitleSize: 'text-base', headerMargin: 'mb-4' };
+        case 'AI_VIDEO_GENERATOR': return { title: 'AI Storyteller', subtitle: 'Automated Scripts & Scenes', logoSize: 'w-24 h-24', titleSize: 'text-3xl', subtitleSize: 'text-base', headerMargin: 'mb-4' };
         case 'ADMIN_DASHBOARD': return { title: 'Admin Console', subtitle: 'User Control Panel', logoSize: 'w-24 h-24', titleSize: 'text-3xl', subtitleSize: 'text-base', headerMargin: 'mb-4' };
         default: return { title: 'Synapse', subtitle: 'AI Laboratory', logoSize: 'w-40 h-40', titleSize: 'text-4xl', subtitleSize: 'text-lg', headerMargin: 'mb-8' };
     }
@@ -376,6 +378,7 @@ const App: React.FC = () => {
                 onSelectPosterMaker={() => setCurrentView('POSTER_MAKER')}
                 onSelectBulkEditor={() => setCurrentView('BULK_EDITOR')}
                 onSelectMathReplicator={() => setCurrentView('MATH_REPLICATOR')}
+                onSelectAIVideoGenerator={() => setCurrentView('AI_VIDEO_GENERATOR')}
                 onSelectAdmin={() => setCurrentView('ADMIN_DASHBOARD')} 
                 onOpenSettings={() => setShowSettings(true)} 
                 mcqReaderTitle={mcqReaderTitle} 
@@ -401,6 +404,7 @@ const App: React.FC = () => {
             {currentView === 'PRO_VIDEO_MAKER' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><ProVideoMaker onUsage={() => trackUsage('VEO')} /></Suspense>}
             {currentView === 'BULK_EDITOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><BulkImageEditor onUsage={() => trackUsage('BULK')} /></Suspense>}
             {currentView === 'MATH_REPLICATOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><MathLayoutReplicator onUsage={() => trackUsage('MATH')} /></Suspense>}
+            {currentView === 'AI_VIDEO_GENERATOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><AIVideoGenerator onUsage={() => trackUsage('AI_VIDEO')} /></Suspense>}
         </main>
         <footer className="text-center mt-8 text-sm text-textSub"><p>Powered by Google Gemini</p><button onClick={() => { userService.logout(); setUser(null); }} className="text-xs mt-2 text-primary hover:text-textMain underline">Logout ({user.name})</button></footer>
       </div>

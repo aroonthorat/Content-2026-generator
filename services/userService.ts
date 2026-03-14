@@ -11,7 +11,8 @@ const DEFAULT_PERMISSIONS: UserPermissions = {
   proVideo: true, 
   poster: true, 
   bulkEditor: true, 
-  mathReplicator: true 
+  mathReplicator: true,
+  aiVideoGenerator: true
 };
 
 // Initial seed data
@@ -70,6 +71,7 @@ const getStoredUsers = (): UserAccount[] => {
             if (typeof perms.proVideo === 'undefined') { perms.proVideo = u.role === 'ADMIN'; changed = true; }
             if (typeof perms.bulkEditor === 'undefined') { perms.bulkEditor = true; changed = true; }
             if (typeof perms.mathReplicator === 'undefined') { perms.mathReplicator = true; changed = true; }
+            if (typeof perms.aiVideoGenerator === 'undefined') { perms.aiVideoGenerator = true; changed = true; }
 
             if (changed) {
                 updated = true;

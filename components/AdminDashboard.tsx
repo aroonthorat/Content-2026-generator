@@ -34,7 +34,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ users, onAddUser, onDel
       name: newUserName,
       password: newUserPass,
       role: newUserRole,
-      permissions: { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true },
+      permissions: { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true, aiVideoGenerator: true },
       stats: { mcqGenerations: 0, ttsGenerations: 0, lastActive: 'Never' }
     });
     setNewUserEmail(''); setNewUserName(''); setNewUserPass('');
@@ -42,7 +42,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ users, onAddUser, onDel
 
   const togglePermission = (u: UserAccount, key: keyof UserPermissions) => {
     // Ensure permission object exists to avoid crash
-    const currentPermissions = u.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true };
+    const currentPermissions = u.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true, aiVideoGenerator: true };
     onUpdatePermissions(u.email, { ...currentPermissions, [key]: !currentPermissions[key] });
   };
 
@@ -77,7 +77,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ users, onAddUser, onDel
                 <div className="flex-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
                     <ul className="space-y-3">
                         {users.map((u) => {
-                            const perms = u.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true };
+                            const perms = u.permissions || { mcq: true, reader: true, video: true, proVideo: false, poster: true, bulkEditor: true, mathReplicator: true, aiVideoGenerator: true };
                             return (
                             <li key={u.email} className="p-4 bg-black/20 rounded-xl border border-border space-y-3">
                                 <div className="flex justify-between items-start">
@@ -92,6 +92,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ users, onAddUser, onDel
                                     <button onClick={() => togglePermission(u, 'reader')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.reader ? 'bg-primary text-white border-primary' : 'bg-black/40 text-textSub border-border'}`}>Reader</button>
                                     <button onClick={() => togglePermission(u, 'poster')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.poster ? 'bg-secondary text-white border-secondary' : 'bg-black/40 text-textSub border-border'}`}>Poster</button>
                                     <button onClick={() => togglePermission(u, 'video')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.video ? 'bg-primary text-white border-primary' : 'bg-black/40 text-textSub border-border'}`}>Animation</button>
+                                    <button onClick={() => togglePermission(u, 'aiVideoGenerator')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.aiVideoGenerator ?? true ? 'bg-primary text-white border-primary' : 'bg-black/40 text-textSub border-border'}`}>AI Storyteller</button>
                                     <button onClick={() => togglePermission(u, 'proVideo')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.proVideo ? 'bg-secondary text-white border-secondary' : 'bg-black/40 text-textSub border-border'}`}>Veo Video</button>
                                     <button onClick={() => togglePermission(u, 'bulkEditor')} className={`px-2 py-1 text-[10px] font-bold rounded-lg border transition-all ${perms.bulkEditor ? 'bg-accent text-white border-accent' : 'bg-black/40 text-textSub border-border'}`}>Bulk Editor</button>
                                 </div>
