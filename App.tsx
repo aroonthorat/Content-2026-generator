@@ -330,9 +330,7 @@ const App: React.FC = () => {
       {showLogin ? (
         <LoginPage 
           onLogin={setUser} 
-          onRegister={handleRegister} 
           onBack={() => setShowLogin(false)}
-          users={users} 
           logoVariant={currentLogo} 
         />
       ) : (
