@@ -402,7 +402,7 @@ const App: React.FC = () => {
             {currentView === 'PRO_VIDEO_MAKER' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><ProVideoMaker onUsage={() => trackUsage('VEO')} /></Suspense>}
             {currentView === 'BULK_EDITOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><BulkImageEditor onUsage={() => trackUsage('BULK')} /></Suspense>}
             {currentView === 'MATH_REPLICATOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><MathLayoutReplicator onUsage={() => trackUsage('MATH')} /></Suspense>}
-            {currentView === 'AI_VIDEO_GENERATOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><AIVideoGenerator onUsage={() => trackUsage('AI_VIDEO')} /></Suspense>}
+            {currentView === 'AI_VIDEO_GENERATOR' && <Suspense fallback={<div className="flex justify-center p-10 text-primary"><SpinnerIcon /></div>}><AIVideoGenerator onUsage={() => trackUsage('AI_VIDEO')} userEmail={user.email} /></Suspense>}
         </main>
         <footer className="text-center mt-8 text-sm text-textSub"><p>Powered by Google Gemini</p><button onClick={() => { userService.logout(); setUser(null); }} className="text-xs mt-2 text-primary hover:text-textMain underline">Logout ({user.name})</button></footer>
       </div>

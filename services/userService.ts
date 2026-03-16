@@ -1,8 +1,9 @@
 
-import { User, UserAccount, UserPermissions, UserRole } from '../types';
+import { User, UserAccount, UserPermissions, UserRole, SavedProject } from '../types';
 
 const STORAGE_KEY_USERS = 'app_users';
 const STORAGE_KEY_SESSION = 'active_user';
+const STORAGE_KEY_PROJECTS = 'saved_projects';
 
 const DEFAULT_PERMISSIONS: UserPermissions = { 
   mcq: true, 
@@ -183,5 +184,37 @@ export const userService = {
             : u
         );
         localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(updated));
-    }
+    },
+
+    // ── Project persistence ──────────────────────────────────────────
+    saveProject: (project: SavedProject): void => {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
+            const all: SavedProject[] = raw ? JSON.parse(raw) : [];
+            // Replace existing or append
+            const idx = all.findIndex(p => p.id === project.id);
+            if (idx >= 0) all[idx] = project;
+            else all.push(project);
+            localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(all));
+        } catch (e) { /* storage full – silently skip */ }
+    },
+
+    getProjects: (userEmail: string): SavedProject[] => {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
+            const all: SavedProject[] = raw ? JSON.parse(raw) : [];
+            return all
+                .filter(p => p.userEmail.toLowerCase() === userEmail.toLowerCase())
+                .sort((a, b) => new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime());
+        } catch { return []; }
+    },
+
+    deleteProject: (projectId: string): void => {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
+            const all: SavedProject[] = raw ? JSON.parse(raw) : [];
+            localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(all.filter(p => p.id !== projectId)));
+        } catch { /* ignore */ }
+    },
 };
+

@@ -97,3 +97,15 @@ export interface ReplicaData {
   elements: ReplicaElement[];
   aspectRatio: number; // width / height
 }
+
+// AI Video Generator – saved (incomplete) project
+export interface SavedProject {
+  id: string;          // uuid
+  userEmail: string;
+  title: string;
+  description: string;
+  videoType: 'SHORT' | 'LONG';
+  script: any;         // VideoScript shape
+  sceneImages: Record<string, string>;  // sceneId -> base64
+  savedAt: string;     // ISO date string
+}
