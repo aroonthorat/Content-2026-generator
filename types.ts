@@ -32,7 +32,6 @@ export interface UserPermissions {
   poster: boolean;
   bulkEditor: boolean; // Image Editor
   mathReplicator: boolean; // Docu-Replica
-  aiVideoGenerator: boolean; // AI Animated Video
 }
 
 export interface User {
@@ -96,16 +95,4 @@ export interface ReplicaElement {
 export interface ReplicaData {
   elements: ReplicaElement[];
   aspectRatio: number; // width / height
-}
-
-// AI Video Generator – saved (incomplete) project
-export interface SavedProject {
-  id: string;          // uuid
-  userEmail: string;
-  title: string;
-  description: string;
-  videoType: 'SHORT' | 'LONG';
-  script: any;         // VideoScript shape
-  sceneImages: Record<string, string>;  // sceneId -> base64
-  savedAt: string;     // ISO date string
 }

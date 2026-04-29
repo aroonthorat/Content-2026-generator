@@ -3,22 +3,24 @@ import React, { useState } from 'react';
 import LogoIcon from './icons/LogoIcon';
 import SpinnerIcon from './icons/SpinnerIcon';
 import ArrowLeftIcon from './icons/ArrowLeftIcon';
-
-import { User, LogoVariant } from '../types';
+import SubscriptionModal from './SubscriptionModal';
+import { User, UserAccount, LogoVariant } from '../types';
 import { userService } from '../services/userService';
 
 interface LoginPageProps {
   onLogin: (user: User) => void;
+  onRegister?: (user: UserAccount) => void;
   onBack?: () => void;
+  users: UserAccount[];
   logoVariant?: LogoVariant;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack, logoVariant = 'DEFAULT' }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onRegister, onBack, users, logoVariant = 'DEFAULT' }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const [showSubscription, setShowSubscription] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,10 +37,20 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack, logoVariant = 'D
     }
   };
 
-
+  const handleRegisterSuccess = (newUser: UserAccount) => {
+      if (onRegister) {
+          onRegister(newUser);
+      }
+  };
 
   return (
     <>
+    <SubscriptionModal 
+        isOpen={showSubscription} 
+        onClose={() => setShowSubscription(false)} 
+        onRegister={handleRegisterSuccess}
+        existingEmails={users.map(u => u.email.toLowerCase())}
+    />
     
     <div className="w-full max-w-md mx-auto animate-slide-fade-in px-4 relative">
       {onBack && (
@@ -108,7 +120,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack, logoVariant = 'D
           </button>
         </form>
 
-
+        <div className="mt-8 text-center border-t border-border pt-6">
+            <p className="text-textSub text-sm mb-3">Don't have an account?</p>
+            <button 
+                onClick={() => setShowSubscription(true)}
+                className="text-sm font-bold text-secondary hover:text-white transition-colors uppercase tracking-wider flex items-center justify-center gap-2 mx-auto hover:underline"
+            >
+                Get Premium Access
+            </button>
+        </div>
       </div>
     </div>
     </>
