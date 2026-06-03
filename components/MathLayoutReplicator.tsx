@@ -55,7 +55,10 @@ const MathLayoutReplicator: React.FC<MathLayoutReplicatorProps> = ({ onUsage }) 
     const a = document.createElement('a');
     a.href = url;
     a.download = `math-replica-layout.json`;
+    document.body.appendChild(a);
     a.click();
+    URL.revokeObjectURL(url);
+    a.remove();
   };
 
   return (

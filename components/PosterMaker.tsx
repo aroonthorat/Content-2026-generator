@@ -343,7 +343,10 @@ const PosterMaker: React.FC<{ onUsage: () => void }> = ({ onUsage }) => {
                                          const a = document.createElement('a');
                                          a.href = url;
                                          a.download = `blueprint-${mainCandidateName.replace(/\s+/g, '-')}.json`;
+                                         document.body.appendChild(a);
                                          a.click();
+                                         URL.revokeObjectURL(url);
+                                         a.remove();
                                      }}
                                      className="py-4 bg-secondary text-white font-black uppercase text-xs rounded-2xl flex items-center justify-center gap-2 hover:bg-secondary/90 shadow-lg shadow-secondary/20"
                                  >
